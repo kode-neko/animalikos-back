@@ -1,0 +1,18 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorCustomizations": {
+    "titleBar.activeForeground": "#ffffff",
+    "titleBar.inactiveForeground": "#ffffff",
+    "titleBar.activeBackground": "#003ba1",
+    "titleBar.inactiveBackground": "#003ba1",
+    "statusBar.background": "#003ba1",
+  },
+  "eslint.lintTask.enable": true,
+  "eslint.options": {
+    "overrideConfigFile": "D:/dev/animalikos/animalikos-back/config/.eslintrc.json"
+  },
+  "jestRunIt.jestConfigPath": "./config/jest.config.js",
+  "jestRunIt.jestCLIOptions": [
+    "--rootDir ./"
+  ]
+}
