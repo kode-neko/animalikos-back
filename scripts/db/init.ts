@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { MongoClient, Db, Collection, InsertManyResult } from "mongodb";
-import { Animal, EnumSex } from "../../src/model";
+import { Animal, EnumSex, EnumSpecies } from "../../src/model";
 import dotenv from 'dotenv';
 import { getClient, getDb } from './connection';
 
@@ -17,6 +17,7 @@ async function createCollections(db: Db): Promise<(Collection<Animal>)> {
 function createAnimals(): Animal[] {
   return Array(parseInt(ANIMAL_MAX as string)).fill({}).map(ele => ({
     name: faker.person.firstName(),
+    species: ['cat', 'dog'][Math.floor(Math.random() * 2)] as EnumSpecies,
     sex: faker.person.sex() as EnumSex,
     breed: faker.lorem.words(),
     bday: faker.date.birthdate(),
