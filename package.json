@@ -6,7 +6,10 @@
   "scripts": {
     "clean": "rm -rf ./lib",
     "start": "node ./lib/index.js",
+    "script:dbinit": "node ./lib/scripts/db/init.js",
+    "script:dbdrop": "node ./lib/scripts/db/drop.js",
     "build": "npm run clean && npx tsc -p ./config/tsconfig.json",
+    "build:script": "npx tsc --project ./config/tsconfig.script.json",
     "build:dev": "npm run clean && npx tsc --project ./config/tsconfig.json --watch",
     "start:dev": "node --watch ./lib/index.js",
     "test": "npx jest --config ./config/jest.config.js --rootDir ./"

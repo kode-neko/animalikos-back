@@ -1,36 +1,23 @@
 import { faker } from '@faker-js/faker';
 import { MongoClient, Db, Collection, InsertManyResult } from "mongodb";
 import { Animal, EnumSex } from "../../src/model";
-import 'dotenv/config';
+import dotenv from 'dotenv';
+import { getClient, getDb } from './connection';
+
+dotenv.config({path: './config/env/.env'});
 
 const {
-  HOST_DB,
-  DB_ADMIN,
-  DB_ADMIN_PASS,
-  DB_NAME,
   ANIMAL_MAX,
 } = process.env;
-
-const auth = {username: DB_ADMIN, password: DB_ADMIN_PASS};
-const client = new MongoClient(HOST_DB as string, {auth});
-let db: Db;
-
-async function getDb() {
-  if(!db) {
-    await client.connect();
-    db = client.db(DB_NAME);
-  }
-  return db;
-}
 
 async function createCollections(db: Db): Promise<(Collection<Animal>)> {
   return await db.collection('animal');
 }
 
 function createAnimals(): Animal[] {
-  return Array(ANIMAL_MAX).fill(undefined).map(ele => ({
+  return Array(parseInt(ANIMAL_MAX as string)).fill({}).map(ele => ({
     name: faker.person.firstName(),
-    sex: EnumSex[faker.person.sex()],
+    sex: faker.person.sex() as EnumSex,
     breed: faker.lorem.words(),
     bday: faker.date.birthdate(),
     enter: faker.date.future(),
@@ -42,19 +29,19 @@ async function insertDataAnimals(animalCollection: Collection<Animal>, animalLis
   return animalCollection.insertMany(animalList);
 }
 
-async function initDB(): Promise<InsertManyResult<Animal>> {
-  const db = await getDb();
+async function initDB(db: Db): Promise<InsertManyResult<Animal>> {
   const animalCollection = await createCollections(db);
   const animalList = await createAnimals();
   return await insertDataAnimals(animalCollection, animalList);
 }
 
 function init() {
-  try{
-    initDB();
-  } catch(err) {
-    console.log(err);
-  }
+  const client: MongoClient= getClient();
+  getDb(client)
+    .then(db => initDB(db))
+    .then(() => console.log('ok'))
+    .catch(err => console.log(err))
+    .finally(() => client.close());
 }
 
-export default init;
+init();
