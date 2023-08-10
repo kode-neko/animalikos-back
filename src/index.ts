@@ -1,9 +1,9 @@
 import Koa from 'koa';
+import {animalRouter} from './router';
 
 const app = new Koa();
 
-app.use(async ctx => {
-  ctx.body = 'Hello World'
-});
+app.use(animalRouter.routes());
+app.use(animalRouter.allowedMethods());
 
 app.listen(4000)
