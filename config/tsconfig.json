@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "../src", // Directorio raiz
+    "rootDir": "../", // Directorio raiz
     "outDir": "../lib", // Lugar donde coloca el codigo transpilado
     "declaration": true, // Crear los type defs (d.ts)
     "lib": [ // Incluir los d.ts de librerías core

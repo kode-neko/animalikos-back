@@ -1,3 +1,9 @@
-import {cube} from './utils';
+import Koa from 'koa';
 
-cube(3);
+const app = new Koa();
+
+app.use(async ctx => {
+  ctx.body = 'Hello World'
+});
+
+app.listen(4000)
