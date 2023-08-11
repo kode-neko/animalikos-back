@@ -1,7 +1,7 @@
 interface SearchAnimal {
   limit: number;
   offset: number;
-  search: string;
+  search?: string;
 }
 
 export default SearchAnimal;
