@@ -20,6 +20,7 @@
     // "jsx": "react", // Como traducir los jsx
     "esModuleInterop": true, // Permitir importar CommonJs
     "sourceMap": true,
+    "strictNullChecks": true,
   },
   "include": [ // A que ficheros se aplica la config. Muy útil para ESLint y transpialdores
     "../src/**/*.ts"
