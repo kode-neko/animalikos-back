@@ -3,11 +3,11 @@ import koaBody from 'koa-body';
 import {animalRouter} from './router';
 import { errorHandlerMw } from './middleware';
 
-const app = new Koa();
+const app: Koa = new Koa();
 app.use(koaBody());
 
 app.use(animalRouter.routes());
 app.use(animalRouter.allowedMethods());
 app.on('error', errorHandlerMw);
 
-app.listen(4000)
+app.listen(4000);
