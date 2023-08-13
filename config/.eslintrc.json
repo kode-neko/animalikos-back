@@ -36,11 +36,12 @@
         "./config/**/*.js"
       ],
       "extends": [
-        "eslint:recommende"
+        "eslint:recommended"
       ]
     }
   ],
   "rules": {
+    "@typescript-eslint/ban-types": "off",
     "indent": [
       "error",
       2

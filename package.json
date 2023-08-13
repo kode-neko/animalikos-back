@@ -25,6 +25,7 @@
     "@typescript-eslint/parser": "^6.1.0",
     "eslint": "^8.45.0",
     "eslint-plugin-jest": "^27.2.3",
+    "eslint-plugin-mocha-no-only": "^1.1.1",
     "jest": "^29.6.1",
     "ts-jest": "^29.1.1",
     "typescript": "^5.1.6"
@@ -36,6 +37,7 @@
     "dotenv": "^16.3.1",
     "koa": "^2.14.2",
     "koa-body": "^6.0.1",
-    "mongodb": "^5.7.0"
+    "mongodb": "^5.7.0",
+    "mongoose": "^7.4.3"
   }
 }

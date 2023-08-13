@@ -1,7 +1,7 @@
-interface SearchAnimal {
+interface SearchObj {
   limit: number;
   offset: number;
   search?: string;
 }
 
-export default SearchAnimal;
+export default SearchObj;

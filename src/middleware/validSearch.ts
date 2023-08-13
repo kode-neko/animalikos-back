@@ -1,8 +1,8 @@
 import Ajv, { JSONSchemaType } from 'ajv';
-import { SearchAnimal } from '../model';
+import { SearchObj } from '../model';
 import { Context, Next } from 'koa';
 
-const schemaSearch: JSONSchemaType<SearchAnimal> = {
+const schemaSearch: JSONSchemaType<SearchObj> = {
   type: 'object',
   properties: {
     limit: {type: 'number'},
