@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import Koa from 'koa';
+import helmet from 'koa-helmet';
+import cors from 'koa-cors';
 import koaBody from 'koa-body';
 import {animalRouter} from './router';
 import { errorHandlerMw } from './middleware';
@@ -17,6 +19,8 @@ const {
 mongoose.connect(HOST_DB as string, {user: DB_ADMIN, pass: DB_ADMIN_PASS})
   .then(() => {
     const app: Koa = new Koa();
+    app.use(helmet());
+    app.use(cors());
     app.use(koaBody());
     
     app.use(animalRouter.routes());
