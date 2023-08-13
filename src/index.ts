@@ -3,8 +3,17 @@ import Koa from 'koa';
 import koaBody from 'koa-body';
 import {animalRouter} from './router';
 import { errorHandlerMw } from './middleware';
+import dotenv from 'dotenv';
 
-mongoose.connect('mongodb://localhost:3010/?authSource=animalikos')
+dotenv.config({path: './config/env/.env'});
+const {
+  HOST_DB,
+  DB_ADMIN,
+  DB_ADMIN_PASS,
+  PORT_APP
+} = process.env;
+
+mongoose.connect(HOST_DB as string, {user: DB_ADMIN, pass: DB_ADMIN_PASS})
   .then(() => {
     const app: Koa = new Koa();
     app.use(koaBody());
@@ -14,7 +23,7 @@ mongoose.connect('mongodb://localhost:3010/?authSource=animalikos')
     app.on('error', errorHandlerMw);
     
     try {
-      app.listen(4000, () => console.log('Server on port 4000'));
+      app.listen(PORT_APP, () => console.log(`Server on port ${PORT_APP}`));
     } catch (err) {
       console.log('Error launching server');
     }
