@@ -21,11 +21,11 @@ class AnimalODM implements ICrud<Animal> {
     AnimalODM.instance = this;
   }
 
-  select(id: string): Promise<Animal | null> {
+  selectById(id: string): Promise<Animal | null> {
     return this.AnimalModel.findById(id);
   }
 
-  selectSearch(params: SearchObj): Promise<Animal[]> {
+  selectBySearch(params: SearchObj): Promise<Animal[]> {
     const {limit, offset, search} = params;
     return this.AnimalModel.find({name: {$regex: search}}, null, {limit, skip: offset});
   }
@@ -40,7 +40,7 @@ class AnimalODM implements ICrud<Animal> {
       .then((value: (AnimalDoc | null)) => Boolean(value));
   }
 
-  delete(id: string): Promise<boolean> {
+  deleteByid(id: string): Promise<boolean> {
     return this.AnimalModel.deleteOne({id})
       .then((res: DeleteResult) => Boolean(res.deletedCount));
   }
