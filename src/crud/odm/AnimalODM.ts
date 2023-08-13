@@ -7,30 +7,41 @@ import { DeleteResult } from "mongodb";
 type AnimalDoc = Document<unknown, {}, Animal> & Animal & {
   _id: Types.ObjectId;
 };
-const AnimalModel: Model<Animal> = model<Animal>('animal', animalSchema);
 
 class AnimalODM implements ICrud<Animal> {
+
+  private static instance: AnimalODM;
+  private AnimalModel: Model<Animal>;
+
+  constructor() {
+    if(AnimalODM.instance) {
+      return AnimalODM.instance;
+    }
+    this.AnimalModel = model<Animal>('animal', animalSchema);
+    AnimalODM.instance = this;
+  }
+
   select(id: string): Promise<Animal | null> {
-    return AnimalModel.findById(id);
+    return this.AnimalModel.findById(id);
   }
 
   selectSearch(params: SearchObj): Promise<Animal[]> {
     const {limit, offset, search} = params;
-    return AnimalModel.find({name: {$regex: search}}, null, {limit, skip: offset});
+    return this.AnimalModel.find({name: {$regex: search}}, null, {limit, skip: offset});
   }
 
   insert(obj: Animal): Promise<Animal>{
-    const newAnimal: AnimalDoc = new AnimalModel(obj);
+    const newAnimal: AnimalDoc = new this.AnimalModel(obj);
     return newAnimal.save();
   }
 
   update(obj: Animal): Promise<boolean> {
-    return AnimalModel.findByIdAndUpdate(obj.id, obj)
+    return this.AnimalModel.findByIdAndUpdate(obj.id, obj)
       .then((value: (AnimalDoc | null)) => Boolean(value));
   }
 
   delete(id: string): Promise<boolean> {
-    return AnimalModel.deleteOne({id})
+    return this.AnimalModel.deleteOne({id})
       .then((res: DeleteResult) => Boolean(res.deletedCount));
   }
 
