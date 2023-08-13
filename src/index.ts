@@ -4,6 +4,7 @@ import koaBody from 'koa-body';
 import {animalRouter} from './router';
 import { errorHandlerMw } from './middleware';
 import dotenv from 'dotenv';
+import { MsgServer } from './constants';
 
 dotenv.config({path: './config/env/.env'});
 const {
@@ -23,13 +24,13 @@ mongoose.connect(HOST_DB as string, {user: DB_ADMIN, pass: DB_ADMIN_PASS})
     app.on('error', errorHandlerMw);
     
     try {
-      app.listen(PORT_APP, () => console.log(`Server on port ${PORT_APP}`));
+      app.listen(PORT_APP, () => console.log(MsgServer.SERVER_OK(PORT_APP as string)));
     } catch (err) {
-      console.log('Error launching server');
+      console.log(MsgServer.SERVER_FAIL);
     }
     
   })
   .catch(() => {
-    console.log('Error conection DB');
+    console.log(MsgServer.DB_FAIL);
   });
 

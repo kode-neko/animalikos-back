@@ -1,6 +1,7 @@
 import {Context} from 'koa';
 import { AnimalODM } from '../crud';
 import { Animal, SearchObj } from '../model';
+import { MsgResponse } from '../constants';
 
 const animalODM: AnimalODM = new AnimalODM();
 
@@ -14,7 +15,7 @@ function getAnimalById(ctx: Context) {
       }
       else {
         ctx.status = 404;
-        ctx.body = {msg: 'Not Found'};
+        ctx.body = {msg: MsgResponse.NOT_FOUND};
       }
     })
     .catch(() => ctx.throw('Server error', 500));
@@ -27,7 +28,7 @@ async function getAnimalBySearch(ctx: Context) {
       ctx.status = 200;
       ctx.body = list;
     })
-    .catch(() => ctx.throw('Server error', 500));
+    .catch(() => ctx.throw(MsgResponse.SERVER_ERROR, 500));
 }
 
 async function createAnimal(ctx: Context) {
@@ -37,7 +38,7 @@ async function createAnimal(ctx: Context) {
       ctx.status = 201;
       ctx.body = animal;
     })
-    .catch(() => ctx.throw('Server error', 500));
+    .catch(() => ctx.throw(MsgResponse.SERVER_ERROR, 500));
 }
 
 async function updateAnimal(ctx: Context) {
@@ -50,10 +51,10 @@ async function updateAnimal(ctx: Context) {
       }
       else {
         ctx.status = 404;
-        ctx.body = {msg: 'Not Found'};
+        ctx.body = {msg: MsgResponse.NOT_FOUND};
       }
     })
-    .catch(() => ctx.throw('Server error', 500));
+    .catch(() => ctx.throw(MsgResponse.SERVER_ERROR, 500));
 }
 
 async function deleteAnimalById(ctx: Context) {
@@ -65,10 +66,10 @@ async function deleteAnimalById(ctx: Context) {
       }
       else {
         ctx.status = 404;
-        ctx.body = {msg: 'Not Found'};
+        ctx.body = {msg: MsgResponse.NOT_FOUND};
       }
     })
-    .catch(() => ctx.throw('Server error', 500));
+    .catch(() => ctx.throw(MsgResponse.SERVER_ERROR, 500));
 }
 
 export {
