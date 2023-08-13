@@ -1,0 +1,1 @@
+export {AnimalODM} from './odm';
