@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import { Animal, EnumSex, EnumSpecies } from "../../model";
 import { ObjectId } from "mongodb";
 
-const animalSchema = new Schema<Animal>({
+const animalSchema: Schema<Animal> = new Schema<Animal>({
   id: {type: ObjectId},
   name: {type: String, required: true},
   species: {type: String, required: true, enum: Object.values(EnumSpecies)},
