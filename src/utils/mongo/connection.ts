@@ -1,4 +1,4 @@
-import { MongoClient, Db } from "mongodb";
+import { MongoClient, Db, Auth } from "mongodb";
 import dotenv from 'dotenv';
 
 dotenv.config({path: './config/env/.env'});
@@ -15,7 +15,7 @@ let db: Db;
 
 function getClient(): MongoClient {
   if(!client) {
-    const auth = {username: DB_ADMIN, password: DB_ADMIN_PASS};
+    const auth: Auth = {username: DB_ADMIN, password: DB_ADMIN_PASS};
     client = new MongoClient(HOST_DB as string, {auth});
   }
   return client;
@@ -23,7 +23,7 @@ function getClient(): MongoClient {
 
 async function getDb(client: MongoClient): Promise<Db> {
   if(!db) {
-    const auth = {username: DB_ADMIN, password: DB_ADMIN_PASS};
+    const auth: Auth = {username: DB_ADMIN, password: DB_ADMIN_PASS};
     client = new MongoClient(HOST_DB as string, {auth});
     await client.connect();
     db = client.db(DB_NAME);
