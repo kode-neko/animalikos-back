@@ -2,8 +2,8 @@ export {
   getClient,
   getDb
 } from './connection';
-export {default as createCollection} from './createCollection';
+export {default as createObjectId} from './createObjectid';
 export {
+  createAnimal,
   createAnimals
 } from './generators';
-export { default as insertDocument} from './insertDocument';
