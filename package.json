@@ -12,7 +12,9 @@
     "build:script": "npx tsc --project ./config/tsconfig.script.json",
     "build:dev": "npm run clean && npx tsc --project ./config/tsconfig.json --watch",
     "start:dev": "node --watch ./lib/index.js",
-    "test": "npx jest --config ./config/jest.config.js --rootDir ./"
+    "test": "npx jest --config ./config/jest.config.js --rootDir ./",
+    "docker": "docker compose --file ./config/docker/docker-compose.yml --project-name animalikos up --detach",
+    "docker:test": "docker compose --file ./config/docker/docker-compose-test.yml --project-name test-animalikos up --detach"
   },
   "author": "",
   "license": "ISC",

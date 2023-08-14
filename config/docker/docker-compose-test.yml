@@ -6,14 +6,14 @@ services:
    image: mongo:latest
    restart: always
    volumes: 
-    - ../scripts/docker/mongo:/docker-entrypoint-initdb.d
+    - ./init-db:/docker-entrypoint-initdb.d
    ports:
-    - 3010:27017
+    - 3012:27017
    environment:
     MONGO_INITDB_ROOT_USERNAME: "root"
     MONGO_INITDB_ROOT_PASSWORD: "SCUvvQj8k3"
     MONGO_INITDB_DATABASE: "animalikos"
 
 networks:
-  animalikos-net:
+  test-animalikos-net:
    driver: bridge
