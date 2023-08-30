@@ -2,7 +2,7 @@ import EnumSex from "./EnumSex";
 import EnumSpecies from "./EnumSpecies";
 
 interface Animal {
-  id?: string;
+  _id?: string;
   name: string;
   species: EnumSpecies;
   sex: EnumSex;

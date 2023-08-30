@@ -1,12 +1,16 @@
-import { Document, Model, Types, model } from "mongoose";
+import { Document, Model, model } from "mongoose";
 import { Animal, SearchObj } from "../../model";
 import ICrud from "../ICrud";
 import animalSchema from "./AnimalSchema";
-import { DeleteResult } from "mongodb";
+import { ObjectId } from "mongodb";
 
 type AnimalDoc = Document<unknown, {}, Animal> & Animal & {
-  _id: Types.ObjectId;
+  _id: string;
 };
+
+type AnimalMongo = (Document<unknown, {}, Animal> & Animal & Required<{
+  _id: string;
+}>) | null
 
 class AnimalODM implements ICrud<Animal> {
 
@@ -17,12 +21,12 @@ class AnimalODM implements ICrud<Animal> {
     if(AnimalODM.instance) {
       return AnimalODM.instance;
     }
-    this.AnimalModel = model<Animal>('animal', animalSchema);
+    this.AnimalModel = model<Animal>('animal', animalSchema, 'animal');
     AnimalODM.instance = this;
   }
 
   selectById(id: string): Promise<Animal | null> {
-    return this.AnimalModel.findById(id);
+    return this.AnimalModel.findById(id).exec();
   }
 
   selectBySearch(params: SearchObj): Promise<Animal[]> {
@@ -31,20 +35,30 @@ class AnimalODM implements ICrud<Animal> {
   }
 
   insert(obj: Animal): Promise<Animal>{
-    const newAnimal: AnimalDoc = new this.AnimalModel(obj);
-    return newAnimal.save();
+    const _id: string = new ObjectId().toJSON();
+    const newAnimal: AnimalDoc = new this.AnimalModel({...obj, _id});
+    return newAnimal
+      .validate()
+      .then(() => newAnimal.save())
+      .then((ele: Animal) => ele);
   }
 
   update(obj: Animal): Promise<boolean> {
-    return this.AnimalModel.findByIdAndUpdate(obj.id, obj)
-      .then((value: (AnimalDoc | null)) => Boolean(value));
+    const {_id, ...rest} = obj;
+    return this.AnimalModel.findByIdAndUpdate(_id, rest)
+      .exec()
+      .then((ele: unknown) => Boolean(ele));
   }
 
   deleteByid(id: string): Promise<boolean> {
-    return this.AnimalModel.deleteOne({id})
-      .then((res: DeleteResult) => Boolean(res.deletedCount));
+    return this.AnimalModel.findByIdAndRemove(id, {lean: true})
+      .exec()
+      .then((ele: unknown) => Boolean(ele));
   }
 
 }
 
 export default AnimalODM;
+export {
+  AnimalMongo
+};

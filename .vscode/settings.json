@@ -13,6 +13,6 @@
   },
   "jestRunIt.jestConfigPath": "./config/jest.config.js",
   "jestRunIt.jestCLIOptions": [
-    "--rootDir ./"
+    "--detectOpenHandles"
   ]
 }

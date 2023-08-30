@@ -1,9 +1,8 @@
 import { Schema } from "mongoose";
 import { Animal, EnumSex, EnumSpecies } from "../../model";
-import { ObjectId } from "mongodb";
 
 const animalSchema: Schema<Animal> = new Schema<Animal>({
-  id: {type: ObjectId},
+  _id: {type: String, unique: true},
   name: {type: String, required: true},
   species: {type: String, required: true, enum: Object.values(EnumSpecies)},
   sex: {type: String, required: true, enum: Object.values(EnumSex)},
@@ -11,6 +10,6 @@ const animalSchema: Schema<Animal> = new Schema<Animal>({
   bday: {type: String, required: true},
   enter: {type: String, required: true},
   desc: {type: String, required: true}
-}, {id: true, _id: false});
+}, {});
 
 export default animalSchema;

@@ -21,9 +21,12 @@
     "esModuleInterop": true, // Permitir importar CommonJs
     "sourceMap": true,
     "strictNullChecks": true,
+    "alwaysStrict": false,
+    "strict": false
   },
   "include": [ // A que ficheros se aplica la config. Muy útil para ESLint y transpialdores
-    "../src/**/*.ts"
+    "../src/**/*.ts",
+    "../src/**/*.test.ts"
   ],
   "exclude": [ // Dentro de los ficheros que se aplican, cuales no hacerlo
     // "../src/**/*.test.ts"
