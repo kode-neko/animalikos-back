@@ -7,7 +7,7 @@ import { fake, mock } from 'sinon';
 
 describe('validAnimal', () => {
 
-  test('Animal is correct', async() => {
+  test('The obj is correct', async() => {
     const animal: Animal = createAnimal();
     const mockCtx: unknown = {
       request: { body: animal },
@@ -19,7 +19,7 @@ describe('validAnimal', () => {
     expect(next.once()).toBeTruthy();
   });
 
-  test('Animal is wrong', async() => {
+  test('The obj has missing properties', async() => {
     const animal: Animal = createAnimal();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {name, ...animalAmputed} = animal; 
@@ -33,7 +33,7 @@ describe('validAnimal', () => {
     expect(next.once().throws()).toBeTruthy();
   });
 
-  test('Animal with wrong date', async() => {
+  test('The obj has some wrong date', async() => {
     const animal: Animal = createAnimal();
     const animalWrongDate: unknown = {...animal, bday: ''}; 
     const mockCtx: unknown = {

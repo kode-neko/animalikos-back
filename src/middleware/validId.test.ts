@@ -3,9 +3,9 @@ import { Context } from 'koa';
 import validId from "./validId";
 import { fake, mock } from 'sinon';
 
-describe('validAnimal', () => {
+describe('validId', () => {
 
-  test('Object has an id', async() => {
+  test('The object has an id', async() => {
     const mockCtx: unknown = {
       request: { body: { _id: '' } },
       throw: fake()
@@ -16,7 +16,7 @@ describe('validAnimal', () => {
     expect(next.once()).toBeTruthy();
   });
 
-  test('Object doesn\'t has an id', async() => {
+  test('The object doesn\'t has an id', async() => {
     const mockCtx: unknown = {
       request: { body: {} },
       throw: fake()
