@@ -1,4 +1,4 @@
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv, { JSONSchemaType,ValidateFunction } from 'ajv';
 import { SearchObj } from '../model';
 import { Context, Next } from 'koa';
 
@@ -14,17 +14,17 @@ const schemaSearch: JSONSchemaType<SearchObj> = {
     'offset'
   ],
   additionalProperties: false 
-}
+};
 
 async function validSearch(ctx: Context, next: Next) {
-  const ajv = new Ajv();
-  const validate = ajv.compile(schemaSearch);
-  const search = ctx.request.body;
-  const valid = validate(search);
+  const ajv: Ajv = new Ajv();
+  const validate: ValidateFunction<SearchObj> = ajv.compile(schemaSearch);
+  const search: SearchObj = ctx.request.body;
+  const valid: boolean = validate(search);
   if(valid)
-    await next()
+    await next();
   else
-    ctx.throw('Not valid', 402)
+    ctx.throw('Not valid', 402);
 }
 
 export default validSearch;
