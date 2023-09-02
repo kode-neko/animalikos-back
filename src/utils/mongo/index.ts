@@ -5,5 +5,6 @@ export {
 export {default as createObjectId} from './createObjectid';
 export {
   createAnimal,
-  createAnimals
+  createAnimals,
+  createSearch
 } from './generators';

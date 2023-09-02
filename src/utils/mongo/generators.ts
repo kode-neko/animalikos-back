@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Animal, EnumSex, EnumSpecies } from "../../model";
+import { Animal, EnumSex, EnumSpecies, SearchObj } from "../../model";
 
 function createAnimal(): Animal {
   return {
@@ -17,7 +17,16 @@ function createAnimals(max: number): Animal[] {
   return Array(max).fill({}).map(() => createAnimal());
 }
 
+function createSearch(): SearchObj {
+  return {
+    limit: faker.number.int({min: 10, max: 20}),
+    offset: faker.number.int({min: 2, max: 10}),
+    search: faker.lorem.word(),
+  };
+}
+
 export {
   createAnimal,
-  createAnimals
+  createAnimals,
+  createSearch
 };
