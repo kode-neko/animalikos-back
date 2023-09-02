@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import Koa from 'koa';
 import helmet from 'koa-helmet';
 import cors from 'koa-cors';
-import koaBody from 'koa-body';
+import koaBody from 'koa-bodyparser';
 import {animalRouter} from './router';
 import { errorHandlerMw } from './middleware';
 import dotenv from 'dotenv';

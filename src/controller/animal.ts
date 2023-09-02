@@ -32,7 +32,7 @@ async function getAnimalBySearch(ctx: Context) {
 }
 
 async function createAnimal(ctx: Context) {
-  const animal: Animal = ctx.request.body; 
+  const animal: Animal = ctx.request.body as Animal; 
   animalODM.insert(animal)
     .then((animal: Animal) => {
       ctx.status = 201;
@@ -42,7 +42,7 @@ async function createAnimal(ctx: Context) {
 }
 
 async function updateAnimal(ctx: Context) {
-  const animal: Animal = ctx.request.body; 
+  const animal: Animal = ctx.request.body as Animal; 
   animalODM.update(animal)
     .then((ok: boolean) => {
       if(ok) {
