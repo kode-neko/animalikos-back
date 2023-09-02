@@ -7,7 +7,7 @@ import {
   deleteAnimalById
 } from '../controller';
 import { validAnimalMw, validIdMw, validSearchMw } from '../middleware';
-import { koaBody } from 'koa-body';
+import koaBody from 'koa-bodyparser';
 
 const animalRouter: Router = new Router();
 
