@@ -1,21 +1,10 @@
-import dotenv from 'dotenv';
 import { MongoClient, Db, Collection, ObjectId } from "mongodb";
-import { createAnimal, getClient, getDb } from '../../utils/mongo';
+import { createAnimal } from '../../utils/mongo';
 import AnimalODM from './AnimalODM';
 import animalFixtures from '../../../fixtures/animal.json';
 import { Animal } from '../../model';
-import path from 'path';
-import mongoose from 'mongoose';
 import { faker } from '@faker-js/faker';
-
-
-dotenv.config({path: path.resolve(__dirname, '../../../config/env/.env.test')});
-const {
-  HOST_DB,
-  DB_ADMIN,
-  DB_ADMIN_PASS,
-  DB_NAME,
-} = process.env;
+import { closeConnections, deleteDataCollection, dropCollection, getCollection, initMongoDb, initMongoose, insertDataCollection, loadConstants } from '../../utils/test';
 
 describe('AnimalODM', () => {
 
@@ -26,28 +15,26 @@ describe('AnimalODM', () => {
 
   beforeAll(async() => {
     try {
-      // Init DB MongoDB
-      client = await getClient(HOST_DB as string, DB_ADMIN as string, DB_ADMIN_PASS as string);
-      db = await getDb(client, DB_NAME as string);
-      animalCollection = await db.collection('animal');
-      // Init mongoose 
-      await mongoose.connect(HOST_DB as string, {user: DB_ADMIN, pass: DB_ADMIN_PASS, dbName: DB_NAME});
+      loadConstants();
+      [client, db] = await initMongoDb();
+      await initMongoose();
+      animalCollection = await getCollection<Animal>(db, 'animal');
     } catch(err) {
       console.log(err);
     }
   });
 
   beforeEach(async() => {
-    await animalCollection.insertMany(animalFixtures as Animal[]);
+    await insertDataCollection<Animal>(animalCollection, animalFixtures as Animal[]);
   });
 
   afterEach(async() => {
-    await animalCollection.deleteMany({});
+    await deleteDataCollection<Animal>(animalCollection);
   });
 
   afterAll(async() => {
-    await db.dropCollection('animal');
-    await client.close();
+    await dropCollection(db, client);
+    await closeConnections(client);
   });
   
   test('Get animal by id', async() => {
