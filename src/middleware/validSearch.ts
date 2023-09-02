@@ -19,7 +19,7 @@ const schemaSearch: JSONSchemaType<SearchObj> = {
 async function validSearch(ctx: Context, next: Next) {
   const ajv: Ajv = new Ajv();
   const validate: ValidateFunction<SearchObj> = ajv.compile(schemaSearch);
-  const search: SearchObj = ctx.request.body;
+  const search: SearchObj = ctx.request.body as SearchObj;
   const valid: boolean = validate(search);
   if(valid)
     await next();
