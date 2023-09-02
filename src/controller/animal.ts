@@ -22,7 +22,7 @@ function getAnimalById(ctx: Context) {
 }
 
 async function getAnimalBySearch(ctx: Context) {
-  const body: SearchObj = ctx.request.body;
+  const body: SearchObj = ctx.request.body as SearchObj;
   animalODM.selectBySearch(body)
     .then((list: Animal[]) => {
       ctx.status = 200;
