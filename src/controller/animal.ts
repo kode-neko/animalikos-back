@@ -5,7 +5,7 @@ import { MsgResponse } from '../constants';
 
 const animalODM: AnimalODM = new AnimalODM();
 
-function getAnimalById(ctx: Context) {
+async function getAnimalById(ctx: Context) {
   const {id} = ctx.params;
   animalODM.selectById(id)
     .then((animal: (Animal | null)) => {
@@ -18,7 +18,8 @@ function getAnimalById(ctx: Context) {
         ctx.body = {msg: MsgResponse.NOT_FOUND};
       }
     })
-    .catch(() => ctx.throw('Server error', 500));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    .catch((_err: Error) => ctx.throw('Server error', 500));
 }
 
 async function getAnimalBySearch(ctx: Context) {
@@ -58,8 +59,8 @@ async function updateAnimal(ctx: Context) {
 }
 
 async function deleteAnimalById(ctx: Context) {
-  const {id} = ctx.params;
-  animalODM.deleteByid(id)
+  const {_id} = ctx.params;
+  animalODM.deleteByid(_id)
     .then((ok: boolean) => {
       if(ok) {
         ctx.status = 200;

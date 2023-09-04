@@ -10,3 +10,6 @@ export {
   deleteDataCollection,
   dropCollection
 } from './collection';
+export {
+  initApp
+} from './app';

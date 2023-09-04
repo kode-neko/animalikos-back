@@ -14,14 +14,10 @@ describe('AnimalODM', () => {
   const animalODM: AnimalODM = new AnimalODM();
 
   beforeAll(async() => {
-    try {
-      loadConstants();
-      [client, db] = await initMongoDb();
-      await initMongoose();
-      animalCollection = await getCollection<Animal>(db, 'animal');
-    } catch(err) {
-      console.log(err);
-    }
+    loadConstants();
+    [client, db] = await initMongoDb();
+    await initMongoose();
+    animalCollection = await getCollection<Animal>(db, 'animal');
   });
 
   beforeEach(async() => {
